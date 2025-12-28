@@ -348,7 +348,7 @@ do {					\
 
 #ifdef TARGET_SYSTEM_ROOT
 #define LINK_SYSROOT_SPEC \
-  "%{isysroot*:-syslibroot %*;:-syslibroot " TARGET_SYSTEM_ROOT "}"
+  "%{isysroot*:-syslibroot %*;:-syslibroot %R}"
 #else
 #define LINK_SYSROOT_SPEC "%{isysroot*:-syslibroot %*}"
 #endif
