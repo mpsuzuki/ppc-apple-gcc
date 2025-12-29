@@ -1,0 +1,4 @@
+[submodule "libstdc++-v3"]
+	path = libstdc++-v3
+	url = https://github.com/mpsuzuki/legacy-libstdcxx-v3
+	branch = 4.2-darwin9
