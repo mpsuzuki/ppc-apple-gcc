@@ -308,7 +308,7 @@ do {					\
 
 #undef	CPP_SPEC
 #define CPP_SPEC "%{static:%{!dynamic:-D__STATIC__}}%{!static:-D__DYNAMIC__}" \
-	" %{isysroot=*} %{!isysroot:-isysroot %R}" \
+	" %{isysroot=*} %{!isysroot:-isysroot %R/}" \
 	" %{pthread:-D_REENTRANT}"
 
 /* APPLE LOCAL begin private extern  */
@@ -348,7 +348,7 @@ do {					\
 
 #ifdef TARGET_SYSTEM_ROOT
 #define LINK_SYSROOT_SPEC \
-  "%{isysroot*:-syslibroot %*;:-syslibroot %R}"
+  "%{isysroot*:-syslibroot %*;:-syslibroot %R/}"
 #else
 #define LINK_SYSROOT_SPEC "%{isysroot*:-syslibroot %*}"
 #endif

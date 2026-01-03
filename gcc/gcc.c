@@ -736,7 +736,7 @@ proper position among the other output files.  */
 #endif
 
 #ifndef SYSROOT_SPEC
-# define SYSROOT_SPEC "--sysroot=%R"
+# define SYSROOT_SPEC "--sysroot=%R/"
 #endif
 
 #ifndef SYSROOT_SUFFIX_SPEC
