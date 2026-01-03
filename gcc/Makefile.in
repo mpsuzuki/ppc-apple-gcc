@@ -424,6 +424,7 @@ LIMITS_H_TEST = [ -f $(SYSTEM_HEADER_DIR)/limits.h ]
 # Directory for prefix to system directories, for
 # each of $(system_prefix)/usr/include, $(system_prefix)/usr/lib, etc.
 TARGET_SYSTEM_ROOT = @TARGET_SYSTEM_ROOT@
+SYSROOT_SUFFIX = @SYSROOT_SUFFIX@
 
 xmake_file=@xmake_file@
 tmake_file=@tmake_file@
@@ -1691,7 +1692,7 @@ c-opts.o : c-opts.c $(CONFIG_H) $(SYSTEM_H) coretypes.h $(TM_H)		\
         $(TREE_INLINE_H) $(DIAGNOSTIC_H) intl.h debug.h $(C_COMMON_H)	\
         opts.h options.h $(MKDEPS_H) c-incpath.h cppdefault.h
 	$(CC) -c $(ALL_CFLAGS) $(ALL_CPPFLAGS) \
-		$< $(OUTPUT_OPTION) @TARGET_SYSTEM_ROOT_DEFINE@ $(SYSROOT_SUFFIX_DEFINE)
+		$< $(OUTPUT_OPTION) @TARGET_SYSTEM_ROOT_DEFINE@ @SYSROOT_SUFFIX_DEFINE@
 
 c-cppbuiltin.o : c-cppbuiltin.c $(CONFIG_H) $(SYSTEM_H) coretypes.h $(TM_H) \
 	$(TREE_H) version.h $(C_COMMON_H) $(C_PRAGMA_H) $(FLAGS_H) toplev.h \
@@ -1736,7 +1737,7 @@ DRIVER_DEFINES = \
   -DDEFAULT_TARGET_MACHINE=\"$(target_noncanonical)\" \
   -DSTANDARD_BINDIR_PREFIX=\"$(bindir)/\" \
   -DTOOLDIR_BASE_PREFIX=\"$(unlibsubdir)/../\" \
-  @TARGET_SYSTEM_ROOT_DEFINE@ $(SYSROOT_SUFFIX_DEFINE) \
+  @TARGET_SYSTEM_ROOT_DEFINE@ @SYSROOT_SUFFIX_DEFINE@ \
   $(VALGRIND_DRIVER_DEFINES) \
   `test "X$${SHLIB_LINK}" = "X" || test "@enable_shared@" != "yes" || echo "-DENABLE_SHARED_LIBGCC"` \
   `test "X$${SHLIB_MULTILIB}" = "X" || echo "-DNO_SHARED_LIBGCC_MULTILIB"`
@@ -3123,7 +3124,7 @@ PREPROCESSOR_DEFINES = \
   -DLOCAL_INCLUDE_DIR=\"$(local_includedir)\" \
   -DCROSS_INCLUDE_DIR=\"$(CROSS_SYSTEM_HEADER_DIR)\" \
   -DTOOL_INCLUDE_DIR=\"$(gcc_tooldir)/include\" \
-  @TARGET_SYSTEM_ROOT_DEFINE@ $(SYSROOT_SUFFIX_DEFINE)
+  @TARGET_SYSTEM_ROOT_DEFINE@ @SYSROOT_SUFFIX_DEFINE@
 
 cppdefault.o: cppdefault.c $(CONFIG_H) $(SYSTEM_H) coretypes.h $(TM_H) \
 	cppdefault.h Makefile

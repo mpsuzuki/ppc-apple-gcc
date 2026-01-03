@@ -797,6 +797,19 @@ AC_SUBST(TARGET_SYSTEM_ROOT)
 AC_SUBST(TARGET_SYSTEM_ROOT_DEFINE)
 AC_SUBST(CROSS_SYSTEM_HEADER_DIR)
 
+AC_ARG_WITH(sysroot-suffix,
+  [  --with-sysroot-suffix[=SUBDIR]
+                          append SUBDIR to sysroot in searching files],
+[
+ SYSROOT_SUFFIX=$with_sysroot_suffix
+ SYSROOT_SUFFIX_DEFINE='-DSYSROOT_SUFFIX_SPEC=\"$(SYSROOT_SUFFIX)\"'
+],[
+ SYSROOT_SUFFIX=
+ SYSROOT_SUFFIX_DEFINE=
+])
+AC_SUBST(SYSROOT_SUFFIX)
+AC_SUBST(SYSROOT_SUFFIX_DEFINE)
+
 # Build with intermodule optimisations
 AC_ARG_ENABLE(intermodule,
 [  --enable-intermodule    build the compiler in one step],
