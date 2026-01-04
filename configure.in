@@ -1063,6 +1063,36 @@ else
   CXXFLAGS=${CXXFLAGS-"-g -O2"}
 fi
 
+# Clang preference is not good to compile old GCC before C99 normalization.
+AC_MSG_CHECKING([whether ${CC} is Clang])
+if ${CC} --version 2>&1 | grep -iq clang
+then
+  AC_MSG_RESULT([yes])
+
+  AC_MSG_CHECKING([whether "${CC} ${CFLAGS}" accepts gnu89-inline by default])
+  AC_TRY_COMPILE([
+      extern inline int f (unsigned int x) { return -1; }
+      int f (unsigned int x) { return -1; }
+    ],[],
+    [AC_MSG_RESULT([yes])],
+    [AC_MSG_RESULT([no])
+
+     AC_MSG_CHECKING([whether "${CC} -std=gnu89 -fgnu89-inline" resolves gnu89-inline])
+     saved_CFLAGS="$CFLAGS"
+     CFLAGS="$CFLAGS -std=gnu89 -fgnu89-inline"
+     AC_TRY_COMPILE([
+        extern inline int f (unsigned int x) { return -1; }
+        int f (unsigned int x) { return -1; }
+      ],[],
+      [AC_MSG_RESULT([yes])],
+      [AC_MSG_RESULT([no]); CFLAGS="$saved_CFLAGS"])
+  ])
+else
+  AC_MSG_RESULT([no])
+fi
+
+
+
 ACX_PROG_GNAT
 ACX_PROG_CMP_IGNORE_INITIAL
 
@@ -2430,36 +2460,6 @@ case $build in
     stage1_cflags="-g -no-cpp-precomp -DHAVE_DESIGNATED_INITIALIZERS=0"
     ;;
 esac
-
-# Clang preference is not good to compile old GCC before C99 normalization.
-AC_MSG_CHECKING([whether ${CC} is Clang])
-if ${CC} --version 2>&1 | grep -iq clang
-then
-  AC_MSG_RESULT([yes])
-
-  AC_MSG_CHECKING([whether "${CC} ${CFLAGS}" accepts gnu89-inline by default])
-  AC_TRY_COMPILE([
-      extern inline int f (unsigned int x) { return -1; }
-      int f (unsigned int x) { return -1; }
-    ],[],
-    [AC_MSG_RESULT([yes])],
-    [AC_MSG_RESULT([no])
-
-     AC_MSG_CHECKING([whether "${CC} -std=gnu89 -fgnu89-inline" resolves gnu89-inline])
-     saved_CFLAGS="$CFLAGS"
-     CFLAGS="$CFLAGS -std=gnu89 -fgnu89-inline"
-     AC_TRY_COMPILE([
-        extern inline int f (unsigned int x) { return -1; }
-        int f (unsigned int x) { return -1; }
-      ],[],
-      [AC_MSG_RESULT([yes]); stage1_cflags="$stage1_cflags -std=gnu89 -fgnu89-inline"],
-      [AC_MSG_RESULT([no])])
-    CFLAGS="$saved_CFLAGS"
-  ])
-else
-  AC_MSG_RESULT([no])
-fi
-
 
 # This is aimed to mimic bootstrap with a non-GCC compiler to catch problems.
 if test "$GCC" = yes; then
