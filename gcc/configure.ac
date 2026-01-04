@@ -3064,6 +3064,38 @@ if test x"$insn" != x; then
 [Define if your assembler supports the --gstabs option.])])
 fi
 
+#
+# Original dsymutil for MacOSX 10.3-10.9 supported PPC binary,
+# but LLVM dsymutil since MacOSX10.11 did not support PPC.
+#
+
+DSYMUTIL_DEFINE=
+case "${target_cpu}/${target_os}" in
+powerpc*/*darwin*)
+  AC_MSG_CHECKING([whether dsymutil is sufficiently old to support ppc])
+  dsymutil_ver=`dsymutil --version 2>/dev/null || echo no`
+  if test "x${dsymutil_ver}" = xno
+  then
+    AC_MSG_RESULT([no usable dsymutil])
+    DSYMUTIL_DEFINE="-DDSYMUTIL_SPEC="
+  elif echo ${dsymutil_ver} | fgrep -q LLVM
+  then
+    AC_MSG_RESULT([LLVM dsymutil, too new])
+    DSYMUTIL_DEFINE="-DDSYMUTIL_SPEC="
+  elif echo ${dsymutil_ver} | fgrep -q dwarfutils
+  then
+    AC_MSG_RESULT([Apple dsymutil, ok])
+    DSYMUTIL_DEFINE="-UDSYMUTIL_SPEC"
+  else
+    AC_MSG_RESULT([ignore unknown dsymutil: "${dsymutil_ver}"])
+    DSYMUTIL_DEFINE="-DDSYMUTIL_SPEC="
+  fi
+  ;;
+*)
+  ;;
+esac
+AC_SUBST(DSYMUTIL_DEFINE)
+
 AC_MSG_CHECKING(linker read-only and read-write section mixing)
 gcc_cv_ld_ro_rw_mix=unknown
 if test $in_tree_ld = yes ; then

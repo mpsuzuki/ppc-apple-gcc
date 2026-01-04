@@ -1738,6 +1738,7 @@ DRIVER_DEFINES = \
   -DSTANDARD_BINDIR_PREFIX=\"$(bindir)/\" \
   -DTOOLDIR_BASE_PREFIX=\"$(unlibsubdir)/../\" \
   @TARGET_SYSTEM_ROOT_DEFINE@ @SYSROOT_SUFFIX_DEFINE@ \
+  @DSYMUTIL_DEFINE@ \
   $(VALGRIND_DRIVER_DEFINES) \
   `test "X$${SHLIB_LINK}" = "X" || test "@enable_shared@" != "yes" || echo "-DENABLE_SHARED_LIBGCC"` \
   `test "X$${SHLIB_MULTILIB}" = "X" || echo "-DNO_SHARED_LIBGCC_MULTILIB"`

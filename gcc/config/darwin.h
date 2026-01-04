@@ -325,6 +325,13 @@ do {					\
    specifying the handling of options understood by generic Unix
    linkers, and for positional arguments like libraries.  */
 /* APPLE LOCAL begin mainline */
+
+/* Apple old/original dsymutil can parse PPC binaries until MacOSX 10.8.
+   After switching LLVM dsymutil, PPC binaries are not supported anymore. */
+#ifndef DSYMUTIL_SPEC
+# define DSYMUTIL_SPEC "%{g*:%{!gstabs*:%{!g0: dsymutil %{o*:%*}%{!o:a.out}}}}"
+#endif
+
 #define LINK_COMMAND_SPEC "\
 %{!fdump=*:%{!fsyntax-only:%{!precomp:%{!c:%{!M:%{!MM:%{!E:%{!S:\
     %(linker) %l %X %{d} %{s} %{t} %{Z} %{u*} \
@@ -343,7 +350,7 @@ do {					\
 %{!fdump=*:%{!fsyntax-only:%{!c:%{!M:%{!MM:%{!E:%{!S:\
 "/* APPLE LOCAL end mainline 4.3 2006-10-31 4370146 */"\
     %{.c|.cc|.C|.cpp|.cp|.c++|.cxx|.CPP|.m|.mm: \
-    %{g*:%{!gstabs*:%{!g0: dsymutil %{o*:%*}%{!o:a.out}}}}}}}}}}}}"
+    " DSYMUTIL_SPEC "}}}}}}}}"
 /* APPLE LOCAL end mainline */
 
 #ifdef TARGET_SYSTEM_ROOT
