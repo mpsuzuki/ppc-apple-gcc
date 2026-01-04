@@ -2438,14 +2438,20 @@ then
   AC_MSG_RESULT([yes])
 
   AC_MSG_CHECKING([whether "${CC} ${CFLAGS}" accepts gnu89-inline by default])
-  AC_TRY_LINK([inline int f(void) { return 1; }],[return f();],
+  AC_TRY_COMPILE([
+      extern inline int f (unsigned int x) { return -1; }
+      int f (unsigned int x) { return -1; }
+    ],[],
     [AC_MSG_RESULT([yes])],
     [AC_MSG_RESULT([no])
 
      AC_MSG_CHECKING([whether "${CC} -std=gnu89 -fgnu89-inline" resolves gnu89-inline])
      saved_CFLAGS="$CFLAGS"
      CFLAGS="$CFLAGS -std=gnu89 -fgnu89-inline"
-     AC_TRY_LINK([inline int f(void) { return 1; }],[return f();],
+     AC_TRY_COMPILE([
+        extern inline int f (unsigned int x) { return -1; }
+        int f (unsigned int x) { return -1; }
+      ],[],
       [AC_MSG_RESULT([yes]); stage1_cflags="$stage1_cflags -std=gnu89 -fgnu89-inline"],
       [AC_MSG_RESULT([no])])
     CFLAGS="$saved_CFLAGS"

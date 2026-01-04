@@ -7386,12 +7386,15 @@ echo "configure:7386: checking whether "${CC} ${CFLAGS}" accepts gnu89-inline by
   cat > conftest.$ac_ext <<EOF
 #line 7388 "configure"
 #include "confdefs.h"
-inline int f(void) { return 1; }
+
+      extern inline int f (unsigned int x) { return -1; }
+      int f (unsigned int x) { return -1; }
+    
 int main() {
-return f();
+
 ; return 0; }
 EOF
-if { (eval echo configure:7395: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:7398: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   echo "$ac_t""yes" 1>&6
 else
@@ -7401,18 +7404,21 @@ else
   echo "$ac_t""no" 1>&6
 
      echo $ac_n "checking whether "${CC} -std=gnu89 -fgnu89-inline" resolves gnu89-inline""... $ac_c" 1>&6
-echo "configure:7405: checking whether "${CC} -std=gnu89 -fgnu89-inline" resolves gnu89-inline" >&5
+echo "configure:7408: checking whether "${CC} -std=gnu89 -fgnu89-inline" resolves gnu89-inline" >&5
      saved_CFLAGS="$CFLAGS"
      CFLAGS="$CFLAGS -std=gnu89 -fgnu89-inline"
      cat > conftest.$ac_ext <<EOF
-#line 7409 "configure"
+#line 7412 "configure"
 #include "confdefs.h"
-inline int f(void) { return 1; }
+
+        extern inline int f (unsigned int x) { return -1; }
+        int f (unsigned int x) { return -1; }
+      
 int main() {
-return f();
+
 ; return 0; }
 EOF
-if { (eval echo configure:7416: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:7422: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   echo "$ac_t""yes" 1>&6; stage1_cflags="$stage1_cflags -std=gnu89 -fgnu89-inline"
 else
@@ -7438,9 +7444,9 @@ if test "$GCC" = yes; then
   # Pass -fkeep-inline-functions for stage 1 if the GCC version supports it.
   CFLAGS="$CFLAGS -fkeep-inline-functions"
   echo $ac_n "checking whether -fkeep-inline-functions is supported""... $ac_c" 1>&6
-echo "configure:7442: checking whether -fkeep-inline-functions is supported" >&5
+echo "configure:7448: checking whether -fkeep-inline-functions is supported" >&5
   cat > conftest.$ac_ext <<EOF
-#line 7444 "configure"
+#line 7450 "configure"
 #include "confdefs.h"
 
 #if (__GNUC__ < 3) \
@@ -7453,7 +7459,7 @@ int main() {
 
 ; return 0; }
 EOF
-if { (eval echo configure:7457: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:7463: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   echo "$ac_t""yes" 1>&6; stage1_cflags="$stage1_cflags -fkeep-inline-functions"
 else
