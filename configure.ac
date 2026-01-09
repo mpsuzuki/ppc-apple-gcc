@@ -2077,7 +2077,7 @@ baseargs=`echo "x$baseargs" | sed -e 's/^x *//' -e 's,\\$,$$,g'`
 # For the build-side libraries, we just need to pretend we're native,
 # and not use the same cache file.  Multilibs are neither needed nor
 # desired.
-build_configargs="--cache-file=../config.cache --build=${build_alias} --host=${build_alias} --target=${target_alias} ${baseargs}"
+build_configargs="--cache-file=../config.cache --build=${build_noncanonical} --host=${build_noncanonical} --target=${target_noncaononical} ${baseargs}"
 
 # For host modules, accept cache file option, or specification as blank.
 case "${cache_file}" in
@@ -2091,7 +2091,7 @@ esac
 
 # Host dirs don't like to share a cache file either, horribly enough.
 # This seems to be due to autoconf 2.5x stupidity.
-host_configargs="--cache-file=./config.cache --build=${build_alias} --host=${host_alias} --target=${target_alias} ${extra_host_args} ${baseargs}"
+host_configargs="--cache-file=./config.cache --build=${build_noncanonical} --host=${host_noncanonical} --target=${target_noncanonical} ${extra_host_args} ${baseargs}"
 
 target_configargs=${baseargs}
 
@@ -2127,7 +2127,7 @@ fi
 # Pass the appropriate --build, --host, --target and --cache-file arguments.
 # We need to pass --target, as newer autoconf's requires consistency
 # for target_alias and gcc doesn't manage it consistently.
-target_configargs="--cache-file=./config.cache --build=${build_alias} --host=${target_alias} --target=${target_alias} ${target_configargs}"
+target_configargs="--cache-file=./config.cache --build=${build_noncanonical} --host=${target_noncanonical} --target=${target_noncanonical} ${target_configargs}"
 
 FLAGS_FOR_TARGET=
 case " $target_configdirs " in
