@@ -241,7 +241,7 @@ case $basic_machine in
 	| alpha | alphaev[4-8] | alphaev56 | alphaev6[78] | alphapca5[67] \
 	| alpha64 | alpha64ev[4-8] | alpha64ev56 | alpha64ev6[78] | alpha64pca5[67] \
 	| am33_2.0 \
-	| arc | arm | arm[bl]e | arme[lb] | armv[2345] | armv[345][lb] | arm64 | aarch64 | avr | avr32 \
+	| arc | arm | arm[bl]e | arme[lb] | armv[2345] | armv[345][lb] | aarch64 | avr | avr32 \
 	| bfin \
 	| c4x | clipper \
 	| d10v | d30v | dlx | dsp16xx \
@@ -289,6 +289,9 @@ case $basic_machine in
 	| z8k)
 		basic_machine=$basic_machine-unknown
 		;;
+	arm64)
+		basic_machine=aarch64-unknown
+		;;
 	m6811 | m68hc11 | m6812 | m68hc12)
 		# Motorola 68HC11/12.
 		basic_machine=$basic_machine-unknown
@@ -317,7 +320,7 @@ case $basic_machine in
 	| alpha-* | alphaev[4-8]-* | alphaev56-* | alphaev6[78]-* \
 	| alpha64-* | alpha64ev[4-8]-* | alpha64ev56-* | alpha64ev6[78]-* \
 	| alphapca5[67]-* | alpha64pca5[67]-* | arc-* \
-	| arm-*  | armbe-* | armle-* | armeb-* | armv*-* | arm64-* | aarch64-* \
+	| arm-*  | armbe-* | armle-* | armeb-* | armv*-* | aarch64-* \
 	| avr-* | avr32-* \
 	| bfin-* | bs2000-* \
 	| c[123]* | c30-* | [cjt]90-* | c4x-* | c54x-* | c55x-* | c6x-* \
@@ -434,6 +437,9 @@ case $basic_machine in
 	apollo68bsd)
 		basic_machine=m68k-apollo
 		os=-bsd
+		;;
+	arm64-*)
+		basic_machine=aarch64-`echo $basic_machine | sed 's/^[^-]*-//'`
 		;;
 	aux)
 		basic_machine=m68k-apple
