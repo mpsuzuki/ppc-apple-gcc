@@ -130,6 +130,10 @@ case ${host} in
     host_xmake_file="${host_xmake_file} arm/x-darwin"
     host_xm_defines='DARWIN_PCH_ADDR_SPACE_SIZE=64*1024*1024'
     ;;
+  arm64-*-darwin* | aarch64-*-darwin*)
+    out_host_hook_obj="${out_host_hook_obj} host-aarch64-darwin.o"
+    host_xmake_file="${host_xmake_file} aarch64/x-darwin"
+    ;;
 # APPLE LOCAL end ARM native compiler support
   hppa1.1-*-pro*)
     host_xmake_file="${host_xmake_file} pa/x-ada"
