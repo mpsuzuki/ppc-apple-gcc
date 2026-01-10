@@ -385,6 +385,7 @@ case "${target}" in
   *-*-chorusos)
     noconfigdirs="$noconfigdirs target-newlib target-libgloss ${libgcj}"
     ;;
+  # ARM64 darwin target is not supported yet
   # APPLE LOCAL begin ARM darwin target
   arm-*-darwin*)
     noconfigdirs="$noconfigdirs target-libgomp target-libobjc"
@@ -992,6 +993,9 @@ case "${host}" in
     if test "${build}" = "${host}"; then
       CC="${CC-gcc} -m32"
     fi
+    ;;
+  aarch64-*-darwin*)
+    host_makefile_frag="config/mh-aarch64-darwin"
     ;;
   # APPLE LOCAL end dynamic-no-pic
   powerpc-*-aix*)
